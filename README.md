@@ -1,0 +1,2 @@
+# fastapi
+educational project fastapi

@@ -1,17 +1,16 @@
 from typing import AsyncGenerator
 from fastapi.testclient import TestClient
-from main import app, get_async_session
-from CRUD.database import metadata, session
-from sqlalchemy.orm import sessionmaker
+from recipes_app.main import app, get_async_session
+
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
 from sqlalchemy.pool import NullPool
 import pytest
 import asyncio
-from httpx import AsyncClient
+from httpx import AsyncClient, ASGITransport
 from sqlalchemy import insert, select
-from core.models import Recipe
+from recipes_app.core.models import Recipe
 from sqlalchemy.orm import Session
-from CRUD.database import Base
+from recipes_app.CRUD.database import Base
 
 
 DATABASE_URL_TEST = "sqlite+aiosqlite:///testdb.db"
@@ -37,10 +36,6 @@ async def async_db_engine():
         print("DROP DB")
         await conn.run_sync(Base.metadata.drop_all)
 
-
-client = TestClient(app)
-
-
 # @pytest.fixture(scope='session')
 # async def async_client() -> AsyncClient:
 #     return AsyncClient(app=app, base_url='http://test')
@@ -48,7 +43,7 @@ client = TestClient(app)
 
 @pytest.fixture(scope="session")
 async def ac() -> AsyncGenerator[AsyncClient, None]:
-    async with AsyncClient(app=app, base_url="http://test") as ac:
+    async with AsyncClient(transport=ASGITransport(app=app),base_url='http://test') as ac:
         yield ac
 
 

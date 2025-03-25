@@ -6,7 +6,11 @@ Flask==2.2.3
 psycopg2-binary
 alembic ==1.14.0
 Werkzeug==2.2.3
-pydantic
-uvicorn
-fastapi
+pydantic~=2.10.6
+uvicorn~=0.34.0
+fastapi~=0.115.11
 asyncpg
+pytest~=8.3.5
+httpx~=0.28.1
+aiosqlite
+pytest-asyncio

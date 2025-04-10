@@ -30,10 +30,12 @@ class RecipeRead(BaseRecipe):
         orm_mode = True
 
 
-class RecipeUpdate(BaseRecipe):
-    title: str | None = None
-    cooking_time: int | None = None
-    text: str | None = None
+class RecipeUpdate(RecipeCreate):
+    pass
+    # title: str
+    # cooking_time: int
+    # text: str
+    # ingredients_list: str
 
 
 class Recipe(BaseRecipe):
